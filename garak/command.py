@@ -339,3 +339,18 @@ def run_policy_scan(generator, _config):
     _policy_scan_msg("end policy scan")
 
     return policy
+
+
+def distribute_generations_config(probelist, _config):
+    # prepare run config: generations
+    for probe in probelist:
+        # distribute `generations` to the probes
+        p_type, p_module, p_klass = probe.split(".")
+        if (
+            hasattr(_config.run, "generations")
+            and _config.run.generations
+            is not None  # garak.core.yaml always provides run.generations
+        ):
+            _config.plugins.probes[p_module][p_klass][
+                "generations"
+            ] = _config.run.generations

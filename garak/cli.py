@@ -490,7 +490,9 @@ def main(arguments=None) -> None:
             if has_changes:
                 exit(1)  # exit with error code to denote changes
             else:
-                print("No revisions applied. Please verify options provided for `--fix`")
+                print(
+                    "No revisions applied. Please verify options provided for `--fix`"
+                )
         elif args.report:
             from garak.report import Report
 
@@ -578,7 +580,7 @@ def main(arguments=None) -> None:
                 command.run_policy_scan(generator, _config)
 
             # configure generations counts for main run
-            _config.distribute_generations_config(parsed_specs["probe"], _config)
+            command.distribute_generations_config(parsed_specs["probe"], _config)
 
             # set up plugins for main run
             # instantiate evaluator
