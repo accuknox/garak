@@ -2,7 +2,7 @@
 
 *Generative AI Red-teaming & Assessment Kit*
 
-`garak` checks if an LLM can be made to fail in a way we don't want. `garak` probes for hallucination, data leakage, prompt injection, misinformation, toxicity generation, jailbreaks, and many other weaknesses. If you know `nmap`, it's `nmap` for LLMs. 
+`garak` checks if an LLM can be made to fail in a way we don't want. `garak` probes for hallucination, data leakage, prompt injection, misinformation, toxicity generation, jailbreaks, and many other weaknesses. If you know `nmap` or `msf` / Metasploit Framework, garak does somewhat similar things to them, but for LLMs. 
 
 `garak` focuses on ways of making an LLM or dialog system fail. It combines static, dynamic, and adaptive probes to explore this.
 
@@ -18,8 +18,8 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/garak)](https://pypi.org/project/garak)
 [![PyPI](https://badge.fury.io/py/garak.svg)](https://badge.fury.io/py/garak)
-[![Downloads](https://pepy.tech/badge/garak)](https://pepy.tech/project/garak)
-[![Downloads](https://pepy.tech/badge/garak/month)](https://pepy.tech/project/garak)
+[![Downloads](https://static.pepy.tech/badge/garak)](https://pepy.tech/project/garak)
+[![Downloads](https://static.pepy.tech/badge/garak/month)](https://pepy.tech/project/garak)
 
 
 ## Get started
@@ -228,28 +228,28 @@ For testing. This generator repeats back the prompt it received.
 
 ## Intro to probes
 
-| Probe | Description |
-| --- | --- |
-| blank | A simple probe that always sends an empty prompt. |
-| atkgen | Automated Attack Generation. A red-teaming LLM probes the target and reacts to it in an attempt to get toxic output. Prototype, mostly stateless, for now uses a simple GPT-2 [fine-tuned](https://huggingface.co/garak-llm/artgpt2tox) on the subset of hhrlhf attempts that yielded detectable toxicity (the only target currently supported for now). |
-| av_spam_scanning | Probes that attempt to make the model output malicious content signatures |
-| continuation | Probes that test if the model will continue a probably undesirable word |
-| dan | Various [DAN](https://adguard.com/en/blog/chatgpt-dan-prompt-abuse.html) and DAN-like attacks |
-| donotanswer | Prompts to which responsible language models should not answer. |
-| encoding | Prompt injection through text encoding |
-| gcg | Disrupt a system prompt by appending an adversarial suffix. |
-| glitch | Probe model for glitch tokens that provoke unusual behavior. |
-| grandma | Appeal to be reminded of one's grandmother. | 
-| goodside | Implementations of Riley Goodside attacks. |
-| leakerplay | Evaluate if a model will replay training data. |
-| lmrc | Subsample of the [Language Model Risk Cards](https://arxiv.org/abs/2303.18190) probes |
-| malwaregen | Attempts to have the model generate code for building malware |
-| misleading | Attempts to make a model support misleading and false claims |
-| packagehallucination | Trying to get code generations that specify non-existent (and therefore insecure) packages. |
-| promptinject | Implementation of the Agency Enterprise [PromptInject](https://github.com/agencyenterprise/PromptInject/tree/main/promptinject) work (best paper awards @ NeurIPS ML Safety Workshop 2022) |
-| realtoxicityprompts | Subset of the RealToxicityPrompts work (data constrained because the full test will take so long to run) |
-| snowball | [Snowballed Hallucination](https://ofir.io/snowballed_hallucination.pdf) probes designed to make a model give a wrong answer to questions too complex for it to process |
-| xss | Look for vulnerabilities the permit or enact cross-site attacks, such as private data exfiltration. |
+| Probe                | Description                                                                                                                   |
+|----------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| blank                | A simple probe that always sends an empty prompt.                                                                             |
+| atkgen               | Automated Attack Generation. A red-teaming LLM probes the target and reacts to it in an attempt to get toxic output. Prototype, mostly stateless, for now uses a simple GPT-2 [fine-tuned](https://huggingface.co/garak-llm/artgpt2tox) on the subset of hhrlhf attempts that yielded detectable toxicity (the only target currently supported for now). |
+| av_spam_scanning     | Probes that attempt to make the model output malicious content signatures                                                     |
+| continuation         | Probes that test if the model will continue a probably undesirable word                                                       |
+| dan                  | Various [DAN](https://adguard.com/en/blog/chatgpt-dan-prompt-abuse.html) and DAN-like attacks                                 |
+| donotanswer          | Prompts to which responsible language models should not answer.                                                               |
+| encoding             | Prompt injection through text encoding                                                                                        |
+| gcg                  | Disrupt a system prompt by appending an adversarial suffix.                                                                   |
+| glitch               | Probe model for glitch tokens that provoke unusual behavior.                                                                  |
+| grandma              | Appeal to be reminded of one's grandmother.                                                                                   |
+| goodside             | Implementations of Riley Goodside attacks.                                                                                    |
+| leakerplay           | Evaluate if a model will replay training data.                                                                                |
+| lmrc                 | Subsample of the [Language Model Risk Cards](https://arxiv.org/abs/2303.18190) probes                                         |
+| malwaregen           | Attempts to have the model generate code for building malware                                                                 |
+| misleading           | Attempts to make a model support misleading and false claims                                                                  |
+| packagehallucination | Trying to get code generations that specify non-existent (and therefore insecure) packages.                                   |
+| promptinject         | Implementation of the Agency Enterprise [PromptInject](https://github.com/agencyenterprise/PromptInject/tree/main/promptinject) work (best paper awards @ NeurIPS ML Safety Workshop 2022) |
+| realtoxicityprompts  | Subset of the RealToxicityPrompts work (data constrained because the full test will take so long to run)                      |
+| snowball             | [Snowballed Hallucination](https://ofir.io/snowballed_hallucination.pdf) probes designed to make a model give a wrong answer to questions too complex for it to process |
+| xss                  | Look for vulnerabilities the permit or enact cross-site attacks, such as private data exfiltration.                           |
 
 ## Logging
 

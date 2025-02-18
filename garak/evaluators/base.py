@@ -178,6 +178,7 @@ class Evaluator:
 
     def print_results_wide(self, detector_name, passes, messages):
         """Print the evaluator's summary"""
+        zscore = None
         if len(passes):
             outcome = (
                 Fore.LIGHTRED_EX + "FAIL"
@@ -185,7 +186,6 @@ class Evaluator:
                 else Fore.LIGHTGREEN_EX + "PASS"
             )
             failrate = 100 * (len(passes) - sum(passes)) / len(passes)
-            zscore = None
             if _config.system.show_z:
                 zscore, rating_symbol = self.get_z_rating(
                     self.probename, detector_name, failrate
