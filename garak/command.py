@@ -294,7 +294,6 @@ def _policy_scan_msg(text):
 
 def run_policy_scan(generator, _config):
 
-    from garak._config import distribute_generations_config
     from garak._plugins import enumerate_plugins
     import garak.evaluators
     import garak.policy
@@ -318,13 +317,13 @@ def run_policy_scan(generator, _config):
     ]
     _policy_scan_msg("using policy probes " + ", ".join(policy_probe_names))
 
-    evaluator = garak.evaluators.ThresholdEvaluator(garak._config.run.eval_threshold)
+    evaluator = garak.evaluators.ThresholdEvaluator(_config.run.eval_threshold)
     distribute_generations_config(policy_probe_names, _config)
     buffs = []
     result = probewise_run(generator, policy_probe_names, evaluator, buffs)
 
     policy = garak.policy.Policy()
-    policy.parse_eval_result(result, threshold=garak._config.policy.threshold)
+    policy.parse_eval_result(result, threshold=_config.policy.threshold)
     policy.propagate_up()
 
     policy_entry = {"entry_type": "policy", "policy": policy.points}
