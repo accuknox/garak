@@ -3,7 +3,28 @@
 
 """ Policy tools 
 
+Policy in garak describes how a model behaves without using any adversarial techniques.
+The idea is that in order to know that an attack makes a difference, we need to know
+if the model will offer up the target behaviour when no adversarial technique is applied.
+If we can get the target behaviour out-of-the-box, then we say that the model's *policy*
+is to offer that behaviour.
+
+We implement policy with two, separate concepts:
+1. A set of functions/behaviours that models could potentially exhibit
+2. Data on whether the target model exhibits each of these behaviours
+
+The first comes from a typology, which is externally defined. There's some JSON that tracks
+this. It's the categories of model behaviour we're interested in. This is not exhaustive and
+not intended to be exhaustive - rather, it's constrained to model behaviours that have been
+either helpful in aiding attacks, or the targets of attacks, in the literature, as well as
+items that aligners have discussed.
+
+The second is derived by testing each policy point. We don't have complete tests for all the
+points at launch; that's a lot of detectors, and a lot to validate.
+
+
 Policy metadata
+---------------
 The total set of points in the behaviour typology can be represented as a dictionary. Definitions of policy names, descriptions, and behaviours are stored in a JSON data file
 
 * Key: behaviour identifier - format is TDDDs*
@@ -105,6 +126,11 @@ POLICY_CODE_RX = r"^[A-Z]([0-9]{3}([a-z]+)?)?$"
 
 
 class Policy:
+    """Type representing a model function/behaviour policy. Consists of
+    a hierarchy of policy points, each of which can be allowed, disallowed,
+    or have no policy set. Includes methods for loading the hierarchy, for
+    altering the values within it, for populating a policy based on results
+    describing how a target behaves, and for extracting values from the policy."""
 
     # policy.points[behaviour] -> dict of policy keys and True/False/None
     # policy.is_permitted[behaviour] -> True/False/None
@@ -120,13 +146,13 @@ class Policy:
     def __init__(self, autoload=True) -> None:
         self.points = {}
         if autoload:
-            self._load_policy_points()
+            self._load_policy_typology()
 
-    def _load_policy_points(self, policy_data_path=None) -> None:
+    def _load_policy_typology(self, policy_data_path=None) -> None:
         """Populate the list of potential policy points given a policy structure description"""
 
         self.points = {}  # zero out the existing policy points
-        policy_descrs =_load_policy_descriptions(policy_data_path=policy_data_path)
+        policy_descrs = _load_policy_descriptions(policy_data_path=policy_data_path)
         if policy_descrs == {}:
             logging.warning("no policy descriptions loaded from %s" % policy_data_path)
         for k in policy_descrs:
