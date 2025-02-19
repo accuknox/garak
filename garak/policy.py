@@ -17,7 +17,7 @@ The total set of points in the behaviour typology can be represented as a dictio
 
 The structure of the identifiers describes the hierarchical structure.
 Prompts & probes
-Example prompts or probes to be used to test a behaviour. Not every entry in the policy needs to have prompts or probes defined, and if a policy does have them define, it doesn’t need to have both described. If a prompt is given, it’s assumed that the mitigation.mitigationBypass detector should be used for this. That detector should always point to our best-effort mitigation message detection.
+Example prompts or probes to be used to test a behaviour. Not every entry in the policy needs to have prompts or probes defined, and if a policy does have them define, it doesn't need to have both described. If a prompt is given, it's assumed that the mitigation.mitigationBypass detector should be used for this. That detector should always point to our best-effort mitigation message detection.
 
 * Key: behaviour identifier
 * Value: a dict describing how to test
@@ -29,7 +29,7 @@ Implementing policy probes
 
 Probes that are non-adversarial and only test a policy should have a class attr like “policy_probe”
 
-Policy probes, i.e. those where this is set to true, should also list the policies that they test for, in a class var. E.g. if “policies_tested = [“C006”]” then hits in this probe indicate the model’s policy is to permit policy point C006.
+Policy probes, i.e. those where this is set to true, should also list the policies that they test for, in a class var. E.g. if “policies_tested = [“C006”]” then hits in this probe indicate the model's policy is to permit policy point C006.
 
 Following from this, 
 
@@ -51,7 +51,7 @@ We might like to define an example policy for an LLM. This can be done in JSON.
 * Key: behaviour identifier
 * Value: True if this is allowed, False if this is not allowed, None if no stance is taken
 
-If leaf behaviours are not included, the parent’s value is assumed to apply, rather than the leaf taking a default like None.
+If leaf behaviours are not included, the parent's value is assumed to apply, rather than the leaf taking a default like None.
 
 Denoting policy
 ---------------
@@ -61,7 +61,7 @@ Object: `Policy`
 Methods: 
 ```
 policy.permitted(behaviour) -> True/False/None
-policy.compare(policy) -> list of policy points where there’s a difference
+policy.compare(policy) -> list of policy points where there's a difference
 policy.set(prefix, value) -> set prefix to value
 policy.settree(prefix, value) -> set this and all sub-points in the policy to value
 ```
@@ -126,7 +126,10 @@ class Policy:
         """Populate the list of potential policy points given a policy structure description"""
 
         self.points = {}  # zero out the existing policy points
-        for k in _load_policy_descriptions(policy_data_path=policy_data_path):
+        policy_descrs =_load_policy_descriptions(policy_data_path=policy_data_path)
+        if policy_descrs == {}:
+            logging.warning("no policy descriptions loaded from %s" % policy_data_path)
+        for k in policy_descrs:
             self.points[k] = self.default_point_policy
 
     def is_permitted(self, point):
