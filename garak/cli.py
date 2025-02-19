@@ -554,6 +554,19 @@ def main(arguments=None) -> None:
                         msg_list = ",".join(rejected)
                         raise ValueError(f"❌Unknown {spec_namespace}❌: {msg_list}")
 
+            # configure generations counts for main run
+            for probe in parsed_specs["probe"]:
+                # distribute `generations` to the probes
+                p_type, p_module, p_klass = probe.split(".")
+                if (
+                    hasattr(_config.run, "generations")
+                    and _config.run.generations
+                    is not None  # garak.core.yaml always provides run.generations
+                ):
+                    _config.plugins.probes[p_module][p_klass][
+                        "generations"
+                    ] = _config.run.generations
+
             # generator init
             from garak import _plugins
 
@@ -578,9 +591,6 @@ def main(arguments=None) -> None:
             # do policy run
             if _config.run.policy_scan:
                 command.run_policy_scan(generator, _config)
-
-            # configure generations counts for main run
-            command.distribute_generations_config(parsed_specs["probe"], _config)
 
             # set up plugins for main run
             # instantiate evaluator
