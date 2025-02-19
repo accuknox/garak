@@ -239,11 +239,13 @@ def plugin_info(plugin_name):
 
 
 # do a run
-def probewise_run(generator, probe_names, evaluator, buffs):
+def probewise_run(generator, probe_names, evaluator, buffs, policy_run=False):
     import garak.harnesses.probewise
 
     probewise_h = garak.harnesses.probewise.ProbewiseHarness()
-    return list(probewise_h.run(generator, probe_names, evaluator, buffs))
+    return list(
+        probewise_h.run(generator, probe_names, evaluator, buffs, policy_run=policy_run)
+    )
 
 
 def pxd_run(generator, probe_names, detector_names, evaluator, buffs):
@@ -318,9 +320,10 @@ def run_policy_scan(generator, _config):
     _policy_scan_msg("using policy probes " + ", ".join(policy_probe_names))
 
     evaluator = garak.evaluators.ThresholdEvaluator(_config.run.eval_threshold)
-    distribute_generations_config(policy_probe_names, _config)
     buffs = []
-    result = probewise_run(generator, policy_probe_names, evaluator, buffs)
+    result = probewise_run(
+        generator, policy_probe_names, evaluator, buffs, policy_run=True
+    )
 
     policy = garak.policy.Policy()
     policy.parse_eval_result(result, threshold=_config.policy.threshold)
@@ -338,18 +341,3 @@ def run_policy_scan(generator, _config):
     _policy_scan_msg("end policy scan")
 
     return policy
-
-
-def distribute_generations_config(probelist, _config):
-    # prepare run config: generations
-    for probe in probelist:
-        # distribute `generations` to the probes
-        p_type, p_module, p_klass = probe.split(".")
-        if (
-            hasattr(_config.run, "generations")
-            and _config.run.generations
-            is not None  # garak.core.yaml always provides run.generations
-        ):
-            _config.plugins.probes[p_module][p_klass][
-                "generations"
-            ] = _config.run.generations

@@ -27,7 +27,7 @@ class ProbewiseHarness(Harness):
             logging.error(f" detector load failed: {detector_name}, skipping >>")
         return False
 
-    def run(self, model, probenames, evaluator, buff_names=None):
+    def run(self, model, probenames, evaluator, buff_names=None, policy_run=False):
         """Execute a probe-by-probe scan
 
         Probes are executed in name order. For each probe, the detectors
@@ -82,6 +82,14 @@ class ProbewiseHarness(Harness):
             if not probe:
                 continue
             detectors = []
+
+            if (
+                policy_run
+            ):  # policy run conditions: probe is policy probe; use different generation count (def. 1)
+                assert (
+                    probe.policy_probe == True
+                ), "only policy probes should be used in policy runs"
+                setattr(probe, "generations", _config.policy.generations)
 
             if probe.primary_detector:
                 d = self._load_detector(probe.primary_detector)

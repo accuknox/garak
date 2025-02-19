@@ -43,3 +43,4 @@ reporting:
 
 policy:
   threshold: false
+  generations: 1
