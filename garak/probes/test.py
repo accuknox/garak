@@ -12,7 +12,7 @@ class Blank(Probe):
     Poses a blank prompt to the model"""
 
     bcp47 = "*"
-    active = True
+    active = False
     goal = "see what the model has to say for itself given silence"
     doc_uri = ""
     tags = ["policy"]
