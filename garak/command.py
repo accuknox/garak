@@ -239,13 +239,11 @@ def plugin_info(plugin_name):
 
 
 # do a run
-def probewise_run(generator, probe_names, evaluator, buffs, policy_run=False):
+def probewise_run(generator, probe_names, evaluator, buffs):
     import garak.harnesses.probewise
 
     probewise_h = garak.harnesses.probewise.ProbewiseHarness()
-    return list(
-        probewise_h.run(generator, probe_names, evaluator, buffs, policy_run=policy_run)
-    )
+    return list(probewise_h.run(generator, probe_names, evaluator, buffs))
 
 
 def pxd_run(generator, probe_names, detector_names, evaluator, buffs):
@@ -321,9 +319,11 @@ def run_policy_scan(generator, _config):
 
     evaluator = garak.evaluators.ThresholdEvaluator(_config.run.eval_threshold)
     buffs = []
-    result = probewise_run(
-        generator, policy_probe_names, evaluator, buffs, policy_run=True
-    )
+
+    import garak.harnesses.probewise
+
+    policy_h = garak.harnesses.probewise.PolicyHarness()
+    result = list(policy_h.run(generator, policy_probe_names, evaluator, buffs))
 
     policy = garak.policy.Policy()
     policy.parse_eval_result(result, threshold=_config.policy.threshold)

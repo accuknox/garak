@@ -16,6 +16,7 @@ from garak import _config, _plugins
 
 
 class ProbewiseHarness(Harness):
+
     def _load_detector(self, detector_name: str) -> Detector:
         detector = _plugins.load_plugin(
             "detectors." + detector_name, break_on_fail=False
@@ -27,7 +28,10 @@ class ProbewiseHarness(Harness):
             logging.error(f" detector load failed: {detector_name}, skipping >>")
         return False
 
-    def run(self, model, probenames, evaluator, buff_names=None, policy_run=False):
+    def _probe_check(self, probe):
+        return probe
+
+    def run(self, model, probenames, evaluator, buff_names=None):
         """Execute a probe-by-probe scan
 
         Probes are executed in name order. For each probe, the detectors
@@ -54,15 +58,15 @@ class ProbewiseHarness(Harness):
         :type buff_names: List[str]
         """
 
-        if buff_names is None:
-            buff_names = []
-
         if not probenames:
             msg = "No probes, nothing to do"
             logging.warning(msg)
             if hasattr(_config.system, "verbose") and _config.system.verbose >= 2:
                 print(msg)
             raise ValueError(msg)
+
+        if buff_names is None:
+            buff_names = []
 
         self._load_buffs(buff_names)
 
@@ -83,13 +87,7 @@ class ProbewiseHarness(Harness):
                 continue
             detectors = []
 
-            if (
-                policy_run
-            ):  # policy run conditions: probe is policy probe; use different generation count (def. 1)
-                assert (
-                    probe.policy_probe == True
-                ), "only policy probes should be used in policy runs"
-                setattr(probe, "generations", _config.policy.generations)
+            probe = self._probe_check(probe)
 
             if probe.primary_detector:
                 d = self._load_detector(probe.primary_detector)
@@ -116,3 +114,13 @@ class ProbewiseHarness(Harness):
             result = h._execute(model, [probe], detectors, evaluator)
             yield list(result)  # ensure the generator is executed
         logging.debug("harness probewise: complete")
+
+
+class PolicyHarness(ProbewiseHarness):
+
+    def _probe_check(self, probe):
+        assert (
+            probe.policy_probe == True
+        ), "only policy probes should be used in policy runs"
+        setattr(probe, "generations", _config.policy.generations)
+        return probe
