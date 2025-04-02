@@ -47,7 +47,6 @@ class WordnetBlockedWords(TreeSearchProbe):
     ]
 
     def _get_initial_nodes(self):
-
         initial_nodes = []
 
         for target_topic in self.target_topics:
@@ -131,7 +130,6 @@ class WordnetAllowedWords(WordnetBlockedWords):
     }
 
     def _get_initial_nodes(self):
-
         allowed_nodes = []
 
         for target_topic in self.target_topics:
