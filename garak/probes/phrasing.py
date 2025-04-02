@@ -80,7 +80,7 @@ class FutureTenseFull(Probe):
         self.prompts = []
 
         with open(
-            data_path / "phrasing" / "past_tense_en.txt",
+            data_path / "phrasing" / "future_tense_en.txt",
             "r",
             encoding="utf-8",
         ) as file:

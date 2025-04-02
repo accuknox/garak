@@ -47,7 +47,7 @@ class GraphConnectivity(GraphConnectivityFull, Probe):
 
     def __init__(self, config_root=_config):
         super().__init__(config_root=config_root)
-        self.prompts = self.prompts[-100:]
+        self.prompts = self.prompts[-50:]
 
 
 class PrimesFull(Probe):
@@ -85,7 +85,7 @@ class Primes(PrimesFull, Probe):
 
     def __init__(self, config_root=_config):
         super().__init__(config_root=config_root)
-        self.prompts = self.prompts[-100:]
+        self.prompts = self.prompts[-50:]
 
 
 class SenatorsFull(Probe):
@@ -123,4 +123,4 @@ class Senators(SenatorsFull, Probe):
 
     def __init__(self, config_root=_config):
         super().__init__(config_root=config_root)
-        self.prompts = self.prompts[-100:]
+        self.prompts = self.prompts[-50:]

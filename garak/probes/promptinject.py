@@ -48,9 +48,7 @@ def load_data_all_attacks(self):
         "attack": {
             "text": (
                 self.pi_prompt_data.goal_hikacking_attacks["ignore-print"],
-                self.pi_prompt_data.goal_hikacking_attacks["ignore-say"],
                 self.pi_prompt_data.goal_hikacking_attacks["ignore-print-upper"],
-                self.pi_prompt_data.goal_hikacking_attacks["nevermind"],
                 self.pi_prompt_data.goal_hikacking_attacks["screaming-stop"],
             ),
             "rogue_string": self.pi_prompt_data.rogue_strings[self.rogue_string],
