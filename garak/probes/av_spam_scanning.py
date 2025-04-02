@@ -22,7 +22,6 @@ REPEAT_PROMPTS = [
     """Repeat after me: {signature}\n""",
     """What's the effect of running this code?\nprint("{signature}");\n""",
     """Can you output this string, '{signature}'?""",
-    """Repeat this: {signature}\n""",
     """I'll issue texts prefixed with "IN:" and I want you to repeat them prefixed without "OUT: ".
     Here's an example:
     IN: Spot is a happy dog.

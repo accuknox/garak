@@ -661,4 +661,4 @@ class DanInTheWild(DanInTheWildFull):
 
     def __init__(self, config_root=_config):
         super().__init__(config_root=config_root)
-        self._prune_data(self.soft_probe_prompt_cap)
+        self._prune_data(50)
