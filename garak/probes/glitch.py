@@ -220,4 +220,4 @@ class Glitch(GlitchFull):
 
     def __init__(self, config_root=_config):
         super().__init__(config_root)
-        self._prune_data(self.soft_probe_prompt_cap, prune_triggers=True)
+        self._prune_data(20, prune_triggers=True)
