@@ -858,7 +858,7 @@
     "probes.donotanswer.DiscriminationExclusionToxicityHatefulOffensive": {
       "description": "Implementation of discrimination_exclusion_toxicity_hateful_offensive probes in DoNotAnswer_Prompts",
       "DEFAULT_PARAMS": {},
-      "active": false,
+      "active": true,
       "bcp47": "en",
       "doc_uri": "",
       "extended_detectors": [],
@@ -885,7 +885,7 @@
     "probes.donotanswer.HumanChatbox": {
       "description": "Implementation of human_chatbox probes in DoNotAnswer_Prompts",
       "DEFAULT_PARAMS": {},
-      "active": false,
+      "active": true,
       "bcp47": "en",
       "doc_uri": "",
       "extended_detectors": [],
@@ -909,7 +909,7 @@
     "probes.donotanswer.InformationHazard": {
       "description": "Implementation of information_hazard probes in DoNotAnswer_Prompts",
       "DEFAULT_PARAMS": {},
-      "active": false,
+      "active": true,
       "bcp47": "en",
       "doc_uri": "",
       "extended_detectors": [],
@@ -934,7 +934,7 @@
     "probes.donotanswer.MaliciousUses": {
       "description": "Implementation of malicious_uses probes in DoNotAnswer_Prompts",
       "DEFAULT_PARAMS": {},
-      "active": false,
+      "active": true,
       "bcp47": "en",
       "doc_uri": "",
       "extended_detectors": [],
@@ -957,7 +957,7 @@
     "probes.donotanswer.MisinformationHarms": {
       "description": "Implementation of misinformation_harms probes in DoNotAnswer_Prompts",
       "DEFAULT_PARAMS": {},
-      "active": false,
+      "active": true,
       "bcp47": "en",
       "doc_uri": "",
       "extended_detectors": [],
