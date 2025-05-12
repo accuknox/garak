@@ -41,8 +41,12 @@ class PluginCache:
         _config.transient.package_dir / "resources" / "plugin_cache.json"
     )
     _user_plugin_cache_filename = (
-        _config.transient.cache_dir / "resources" / "plugin_cache.json"
+        _config.transient.package_dir / "resources" / "user_plugin_cache.json"
     )
+    # _user_plugin_cache_filename = (
+    #     _config.transient.cache_dir / "resources" / "plugin_cache.json"
+    # )
+
     _plugin_cache_dict = None
 
     _mutex = Lock()
@@ -76,12 +80,14 @@ class PluginCache:
             )
             if base_time > user_time:
                 update_user_file = True
-        if update_user_file:
-            self._user_plugin_cache_filename.parent.mkdir(
-                mode=0o740, parents=True, exist_ok=True
-            )
-            shutil.copy2(self._plugin_cache_filename, self._user_plugin_cache_filename)
-            user_time = base_time
+
+        #####this is commented - to not update the time #####
+        # if update_user_file:
+        #     self._user_plugin_cache_filename.parent.mkdir(
+        #         mode=0o740, parents=True, exist_ok=True
+        #     )
+        #     shutil.copy2(self._plugin_cache_filename, self._user_plugin_cache_filename)
+        #     user_time = base_time
 
         with open(
             self._user_plugin_cache_filename, "r", encoding="utf-8"
@@ -89,12 +95,13 @@ class PluginCache:
             local_cache = json.load(cache_file)
 
         # validate cache state on startup
-        if not self._valid_loaded_cache(local_cache, user_time):
-            self._build_plugin_cache()
-            with open(
-                self._user_plugin_cache_filename, "r", encoding="utf-8"
-            ) as cache_file:
-                local_cache = json.load(cache_file)
+        #####this is commented - to not update the cache file #####
+        # if not self._valid_loaded_cache(local_cache, user_time):
+        #     self._build_plugin_cache()
+        #     with open(
+        #         self._user_plugin_cache_filename, "r", encoding="utf-8"
+        #     ) as cache_file:
+        #         local_cache = json.load(cache_file)
 
         return local_cache
 
