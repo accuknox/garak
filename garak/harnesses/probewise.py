@@ -75,6 +75,7 @@ class ProbewiseHarness(Harness):
         for probename in probenames:
             try:
                 probe = _plugins.load_plugin(probename)
+                print("probe instance", probe)
             except Exception as e:
                 print(f"failed to load probe {probename}")
                 logging.warning("failed to load probe %s:", repr(e))

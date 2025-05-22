@@ -434,5 +434,6 @@ def load_plugin(path, break_on_fail=True, config_root=_config) -> object:
             raise GarakException(e) from e
         else:
             return False
+    print("plugin instance",plugin_instance)
 
     return plugin_instance
