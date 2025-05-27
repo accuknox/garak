@@ -105,7 +105,7 @@ class Harness(Configurable):
         self._start_run_hook()
 
         for probe in probes:
-            print("probe",probe)
+            print("Harness --> probe >>>>>>>>>>>>>>>", probe)
             
             logging.debug("harness: probe start for %s", probe.probename)
             if not probe:
@@ -114,7 +114,7 @@ class Harness(Configurable):
             modality_match = _modality_match(
                 probe.modality["in"], model.modality["in"], self.strict_modality_match
             )
-
+            print("Harness --> modality_match >>>>>>>>>>>>>>>", modality_match)
             if not modality_match:
                 logging.warning(
                     "probe skipped due to modality mismatch: %s - model expects %s",
@@ -122,13 +122,14 @@ class Harness(Configurable):
                     model.modality["in"],
                 )
                 continue
-
+            print("Harness --> modality_match >>>>>>>>>>>>>>>", modality_match)
             attempt_results = probe.probe(model)
             assert isinstance(
                 attempt_results, (list, types.GeneratorType)
             ), "probing should always return an ordered iterable"
-
+            
             for d in detectors:
+                print("Harness --> detectors >>>>>>>>>>>>>>>", d)
                 logging.debug("harness: run detector %s", d.detectorname)
                 attempt_iterator = tqdm.tqdm(attempt_results, leave=False)
                 detector_probe_name = d.detectorname.replace("garak.detectors.", "")
@@ -141,6 +142,7 @@ class Harness(Configurable):
                     )
 
             for attempt in attempt_results:
+                print("Harness --> attempt >>>>>>>>>>>>>>>", attempt)
                 attempt.status = garak.attempt.ATTEMPT_COMPLETE
                 _config.transient.reportfile.write(json.dumps(attempt.as_dict()) + "\n")
 
