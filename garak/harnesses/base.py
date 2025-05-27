@@ -142,7 +142,7 @@ class Harness(Configurable):
                     )
 
             for attempt in attempt_results:
-                print("Harness --> attempt >>>>>>>>>>>>>>>", attempt)
+                print("Harness --> attempt >>>>>>>>>>>>>>>", attempt.as_dict())
                 attempt.status = garak.attempt.ATTEMPT_COMPLETE
                 _config.transient.reportfile.write(json.dumps(attempt.as_dict()) + "\n")
 
