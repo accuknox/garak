@@ -96,6 +96,7 @@ class Harness(Configurable):
 
         if not probes:
             msg = "No probes, nothing to do"
+            print(msg)
             logging.warning(msg)
             if hasattr(_config.system, "verbose") and _config.system.verbose >= 2:
                 print(msg)
@@ -104,6 +105,8 @@ class Harness(Configurable):
         self._start_run_hook()
 
         for probe in probes:
+            print("probe",probe)
+            
             logging.debug("harness: probe start for %s", probe.probename)
             if not probe:
                 continue
