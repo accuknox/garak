@@ -96,11 +96,14 @@ class Probe(Configurable):
         self, attempts: Iterable[garak.attempt.Attempt]
     ) -> Iterable[garak.attempt.Attempt]:
         """this is where we do the buffing, if there's any to do"""
+        print("probe-->probe --> buffmanager buffmanager", _config.buffmanager.buffs)
         if len(_config.buffmanager.buffs) == 0:
+            print("probe-->probe --> buffmanager buffmanager", _config.buffmanager.buffs)
             return attempts
         buffed_attempts = []
         buffed_attempts_added = 0
         if _config.plugins.buffs_include_original_prompt:
+            print("probe-->probe --> buffmanager buffs_include_original_prompt", _config.plugins.buffs_include_original_prompt)
             for attempt in attempts:
                 buffed_attempts.append(attempt)
         for buff in _config.buffmanager.buffs:
@@ -218,10 +221,12 @@ class Probe(Configurable):
         for seq, prompt in enumerate(prompts):
             attempts_todo.append(self._mint_attempt(prompt, seq))
 
+        print("probe-->probe --> After mint attempts_todo", attempts_todo)
         # buff hook
         if len(_config.buffmanager.buffs) > 0:
+            print("probe-->probe --> After buffmanager attempts_todo", attempts_todo)
             attempts_todo = self._buff_hook(attempts_todo)
-
+        print("probe-->probe --> After buffmanager attempts_todo", attempts_todo)
         # iterate through attempts
         attempts_completed = self._execute_all(attempts_todo)
         print("probe-->attempts_completed --> attempts_completed", attempts_completed)
