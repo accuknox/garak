@@ -70,6 +70,9 @@ class Probe(Configurable):
             print(
                 f"loading {Style.BRIGHT}{Fore.LIGHTYELLOW_EX}probe: {Style.RESET_ALL}{self.probename}"
             )
+        print(
+                f"loading {Style.BRIGHT}{Fore.LIGHTYELLOW_EX}probe: {Style.RESET_ALL}{self.probename}"
+            )
         logging.info(f"probe init: {self}")
         if "description" not in dir(self):
             if self.__doc__:
@@ -147,8 +150,9 @@ class Probe(Configurable):
             seq=seq,
             prompt=prompt,
         )
-
+        print("probe-->_mint_attempt --> new_attempt", new_attempt)
         new_attempt = self._attempt_prestore_hook(new_attempt, seq)
+        print("probe-->_mint_attempt --> result new_attempt", new_attempt)
         return new_attempt
 
     def _execute_attempt(self, this_attempt):
@@ -198,6 +202,7 @@ class Probe(Configurable):
                 result = self._execute_attempt(this_attempt)
                 _config.transient.reportfile.write(json.dumps(result.as_dict()) + "\n")
                 attempts_completed.append(result)
+        print("probe-->execute_all --> attempts_completed", attempts_completed)
         return attempts_completed
 
     def probe(self, generator) -> Iterable[garak.attempt.Attempt]:
@@ -205,10 +210,11 @@ class Probe(Configurable):
         logging.debug("probe execute: %s", self)
 
         self.generator = generator
-
+        print("probe-->probe --> generator", self.generator)
         # build list of attempts
         attempts_todo: Iterable[garak.attempt.Attempt] = []
         prompts = list(self.prompts)
+        print("probe-->probe --> prompts", prompts)
         for seq, prompt in enumerate(prompts):
             attempts_todo.append(self._mint_attempt(prompt, seq))
 
@@ -218,7 +224,7 @@ class Probe(Configurable):
 
         # iterate through attempts
         attempts_completed = self._execute_all(attempts_todo)
-
+        print("probe-->attempts_completed --> attempts_completed", attempts_completed)
         logging.debug(
             "probe return: %s with %s attempts", self, len(attempts_completed)
         )
