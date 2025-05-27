@@ -72,8 +72,10 @@ class ProbewiseHarness(Harness):
             + ", ".join([name.replace("probes.", "") for name in probenames])
         )
         logging.info("probe queue: %s", " ".join(probenames))
+        print("probenames>>>>>>>", probenames)
         for probename in probenames:
             try:
+                print("probename>>>>>>>", probename)
                 probe = _plugins.load_plugin(probename)
                 print("probe instance", probe)
             except Exception as e:
