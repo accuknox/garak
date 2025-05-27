@@ -156,6 +156,10 @@ class Probe(Configurable):
         print("probe-->_mint_attempt --> new_attempt", new_attempt)
         new_attempt = self._attempt_prestore_hook(new_attempt, seq)
         print("probe-->_mint_attempt --> result new_attempt", new_attempt)
+        try: 
+            print(new_attempt.as_dict())
+        except:
+            print("no log")
         return new_attempt
 
     def _execute_attempt(self, this_attempt):
@@ -182,7 +186,10 @@ class Probe(Configurable):
             and self.generator.parallel_capable
         ):
             from multiprocessing import Pool
-
+            try: 
+                print(attempts.as_dict())
+            except:
+                print("no log")
             attempt_bar = tqdm.tqdm(total=len(attempts), leave=False)
             attempt_bar.set_description(self.probename.replace("garak.", ""))
 
