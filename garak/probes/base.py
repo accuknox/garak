@@ -161,6 +161,16 @@ class Probe(Configurable):
         except:
             print("no log")
         return new_attempt
+    
+    def extract_probe_name(self, probe_name: str) -> str:
+        try:
+            if "_" in probe_name:
+                parts = probe_name.split(".")
+                probe_name=".".join(parts[-1:])
+                probe_name=probe_name.replace("_",".")
+            return probe_name
+        except Exception as e:
+            return probe_name
 
     def _execute_attempt(self, this_attempt):
         """handles sending an attempt to the generator, postprocessing, and logging"""
