@@ -146,10 +146,14 @@ class Evaluator:
             )
 
     def extract_probe_name(self, probe_name: str) -> str:
-        parts = probe_name.split(".")
-        if len(parts) >= 3:
-            return ".".join(parts[-2:])
-        return probe_name
+        try:
+            if "_" in probe_name:
+                parts = probe_name.split(".")
+                probe_name=".".join(parts[-1:])
+                probe_name=probe_name.replace("_",".")
+            return probe_name
+        except Exception as e:
+            return probe_name
     
     def get_z_rating(self, probe_name, detector_name, asr_pct) -> str:
         probe_module, probe_classname = probe_name.split(".")
