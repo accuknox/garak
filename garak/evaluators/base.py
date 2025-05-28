@@ -118,7 +118,7 @@ class Evaluator:
                                     "attempt_seq": attempt.seq,
                                     "attempt_idx": idx,
                                     "generator": f"{_config.plugins.model_type} {_config.plugins.model_name}",
-                                    "probe": self.probename,
+                                    "probe": self.extract_probe_name(self.probename),
                                     "detector": detector,
                                     "generations_per_prompt": _config.run.generations,
                                 }
@@ -136,7 +136,7 @@ class Evaluator:
                 json.dumps(
                     {
                         "entry_type": "eval",
-                        "probe": self.probename,
+                        "probe": self.extract_probe_name(self.probename),
                         "detector": "detector." + detector,
                         "passed": sum(all_passes),
                         "total": len(all_passes),
@@ -145,6 +145,16 @@ class Evaluator:
                 + "\n"
             )
 
+    def extract_probe_name(self, probe_name: str) -> str:
+        try:
+            if "_" in probe_name:
+                parts = probe_name.split(".")
+                probe_name=".".join(parts[-1:])
+                probe_name=probe_name.replace("_",".")
+            return probe_name
+        except Exception as e:
+            return probe_name
+    
     def get_z_rating(self, probe_name, detector_name, asr_pct) -> str:
         probe_module, probe_classname = probe_name.split(".")
         detector_module, detector_classname = detector_name.split(".")
