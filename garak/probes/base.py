@@ -153,10 +153,14 @@ class Probe(Configurable):
     
     def extract_probe_name(self, probe_name: str) -> str:
         try:
-            if "_" in probe_name:
-                parts = probe_name.split(".")
-                probe_name=".".join(parts[-1:])
-                probe_name=probe_name.replace("_",".")
+            if "_" in probe_name and "av_spam_scanning." not in probe_name:
+                if "av_spam_scanning" in probe_name:
+                    parts = probe_name.split(".")
+                    probe_name= parts[-1][::-1].replace("_", ".", 1)[::-1]
+                else:
+                    parts = probe_name.split(".")
+                    probe_name=".".join(parts[-1:])
+                    probe_name=probe_name.replace("_",".")
             return probe_name
         except Exception as e:
             return probe_name
