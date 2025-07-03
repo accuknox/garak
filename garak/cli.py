@@ -58,9 +58,9 @@ def main(arguments=None) -> None:
     log_filename = command.start_logging()
     _config.load_base_config()
 
-    print(
-        f"garak {__description__} v{_config.version} ( https://github.com/NVIDIA/garak ) at {_config.transient.starttime_iso}"
-    )
+    # print(
+    #     f"garak {__description__} v{_config.version} ( https://github.com/NVIDIA/garak ) at {_config.transient.starttime_iso}"
+    # )
 
     import argparse
 
