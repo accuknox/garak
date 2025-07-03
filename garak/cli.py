@@ -499,7 +499,7 @@ def main(arguments=None) -> None:
         # model is specified, we're doing something
         elif _config.plugins.model_type:
 
-            print(f"📜 logging to {log_filename}")
+            # print(f"📜 logging to {log_filename}")
 
             conf_root = _config.plugins.generators
             for part in _config.plugins.model_type.split("."):
@@ -576,7 +576,7 @@ def main(arguments=None) -> None:
                 autodan_generate(generator=generator, prompt=prompt, target=target)
 
             command.start_run()  # start the run now that all config validation is complete
-            print(f"📜 reporting to {_config.transient.report_filename}")
+            # print(f"📜 reporting to {_config.transient.report_filename}")
 
             if parsed_specs["detector"] == []:
                 command.probewise_run(
