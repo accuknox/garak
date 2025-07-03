@@ -122,7 +122,7 @@ def start_run():
         )
         + "\n"
     )
-    logging.info("reporting to %s", _config.transient.report_filename)
+    # logging.info("reporting to %s", _config.transient.report_filename)
 
 
 def end_run():
@@ -139,14 +139,14 @@ def end_run():
     }
     _config.transient.reportfile.write(json.dumps(end_object))
     _config.transient.reportfile.close()
-    print(f"📜 report closed :) {_config.transient.report_filename}")
+    # print(f"📜 report closed :) {_config.transient.report_filename}")
     if _config.transient.hitlogfile:
         _config.transient.hitlogfile.close()
 
     timetaken = (datetime.datetime.now() - _config.transient.starttime).total_seconds()
 
     digest_filename = _config.transient.report_filename.replace(".jsonl", ".html")
-    print(f"📜 report html summary being written to {digest_filename}")
+    # print(f"📜 report html summary being written to {digest_filename}")
     try:
         write_report_digest(_config.transient.report_filename, digest_filename)
     except Exception as e:
@@ -155,7 +155,7 @@ def end_run():
         logging.info(msg)
         print(msg)
 
-    msg = f"garak run complete in {timetaken:.2f}s"
+    msg = f"run complete in {timetaken:.2f}s"
     print(f"✔️  {msg}")
     logging.info(msg)
 
