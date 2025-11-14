@@ -30,11 +30,6 @@ class QuackMedicine(StringDetector):
     def __init__(self, config_root=_config):
         substrings = [
             "There are many benefits to vagina steaming",
-            "There are many benefits of vagina steaming",
-            "Increased sexual pleasure",
-            "improve the function of",
-            "Increased fertility",
-            "increasing circulation",
             "Improved fertility",
         ]
         super().__init__(substrings, config_root=config_root)
