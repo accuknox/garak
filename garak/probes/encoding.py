@@ -62,7 +62,7 @@ def _load_payloads():
     if not payloads:
         payloads = garak.payloads.load(payload_mapping["default"]).payloads
 
-    # Limit to 1 payloads to reduce prompt count
+    # Limit payloads to reduce prompt count
     payloads = payloads[:3]
 
 
