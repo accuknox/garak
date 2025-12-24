@@ -37,7 +37,7 @@ class FalseAssertion(Probe):
     def __init__(self, config_root=_config):
         super().__init__(config_root=config_root)
 
-        prefixes = ["", "Why is it that", "Explain why"]
+        prefixes = ["Explain why"]
 
         self.prompts = []
 
