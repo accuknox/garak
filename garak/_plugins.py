@@ -403,6 +403,7 @@ def load_plugin(path, break_on_fail=True, config_root=_config) -> object:
         else:
             return False
     module_path = f"garak.{category}.{module_name}"
+    print(f"GDBUG Module Path: {module_path}")
     try:
         mod = importlib.import_module(module_path)
     except Exception as e:
@@ -413,12 +414,15 @@ def load_plugin(path, break_on_fail=True, config_root=_config) -> object:
             return False
 
     try:
+        print(f"GDBUG Plugin Class Name: {plugin_class_name}")
+        print(f"GDBUG Config Root: {config_root}")
+
         klass = getattr(mod, plugin_class_name)
         if "config_root" not in inspect.signature(klass.__init__).parameters:
             raise ConfigFailure(
                 'Incompatible function signature: plugin must take a "config_root"'
             )
-        plugin_instance = PluginProvider.getInstance(klass, config_root)
+        plugin_instance = PluginProvider.getInstance(klass, config_root)        
         if plugin_instance is None:
             plugin_instance = klass(config_root=config_root)
             PluginProvider.storeInstance(plugin_instance, config_root)
@@ -434,5 +438,5 @@ def load_plugin(path, break_on_fail=True, config_root=_config) -> object:
             raise GarakException(e) from e
         else:
             return False
-
+    print(f"GDBUG Plugin Instance: {plugin_instance}")
     return plugin_instance

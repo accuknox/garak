@@ -579,10 +579,12 @@ def main(arguments=None) -> None:
             # print(f"📜 reporting to {_config.transient.report_filename}")
 
             if parsed_specs["detector"] == []:
+                print(f"GDBUG probewise_run")
                 command.probewise_run(
                     generator, parsed_specs["probe"], evaluator, parsed_specs["buff"]
-                )
+                ) 
             else:
+                print(f"GDBUG pxd_run")
                 command.pxd_run(
                     generator,
                     parsed_specs["probe"],
