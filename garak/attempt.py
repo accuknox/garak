@@ -86,6 +86,7 @@ class Attempt:
         self.seq = seq
         if prompt is not None:
             self.prompt = prompt
+        print(f"GDBUG self.prompt: {self.prompt}")
 
     def as_dict(self) -> dict:
         """Converts the attempt to a dictionary."""

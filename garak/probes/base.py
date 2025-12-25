@@ -136,6 +136,7 @@ class Probe(Configurable):
 
     def _mint_attempt(self, prompt=None, seq=None) -> garak.attempt.Attempt:
         """function for creating a new attempt given a prompt"""
+
         new_attempt = garak.attempt.Attempt(
             probe_classname=self.extract_probe_name((
                 str(self.__class__.__module__).replace("garak.probes.", "")
@@ -149,6 +150,7 @@ class Probe(Configurable):
         )
 
         new_attempt = self._attempt_prestore_hook(new_attempt, seq)
+        print(f"GDBUG new_attempt: {new_attempt}")
         return new_attempt
     
     def extract_probe_name(self, probe_name: str) -> str:

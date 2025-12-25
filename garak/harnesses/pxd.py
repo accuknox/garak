@@ -25,6 +25,7 @@ class PxD(Harness):
             buff_names = []
         probe_names = sorted(probe_names)
         detector_names = sorted(detector_names)
+        print(f"GDBUG probewise_run: start")
         print(
             f"🕵️  queue of {Style.BRIGHT}{Fore.LIGHTYELLOW_EX}probes:{Style.RESET_ALL} "
             + ", ".join([name.replace("probes.", "") for name in probe_names])
@@ -38,6 +39,7 @@ class PxD(Harness):
         for probename in probe_names:
             try:
                 probe = _plugins.load_plugin(probename)
+                print(f"GDBUG probewise_run probe: {probe}")
             except Exception as e:
                 message = f"{probename} load exception 🛑, skipping >>"
                 print(message, str(e))
@@ -51,6 +53,7 @@ class PxD(Harness):
             detectors = []
             for detector_name in detector_names:
                 detector = _plugins.load_plugin(detector_name, break_on_fail=False)
+                print(f"GDBUG probewise_run detector: {detector}")
                 if detector:
                     detectors.append(detector)
                 else:

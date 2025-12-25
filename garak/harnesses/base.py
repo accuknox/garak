@@ -87,6 +87,7 @@ class Harness(Configurable):
         :param announce_probe: Should we print probe loading messages?
         :type announce_probe: bool, optional
         """
+        print(f"GDBUG Model: {model}")
         if not detectors:
             msg = "No detectors, nothing to do"
             logging.warning(msg)
@@ -121,6 +122,7 @@ class Harness(Configurable):
                 continue
 
             attempt_results = probe.probe(model)
+            print(f"GDBUG Probe: {probe}")
             assert isinstance(
                 attempt_results, (list, types.GeneratorType)
             ), "probing should always return an ordered iterable"
