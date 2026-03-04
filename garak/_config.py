@@ -208,7 +208,7 @@ def set_all_http_lib_agents(agent_string):
 def set_http_lib_agents(agent_strings: dict):
 
     global REQUESTS_AGENT
-
+    print(f"agent_strings: {agent_strings}")
     if "requests" in agent_strings:
         from requests import utils
 

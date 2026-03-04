@@ -609,3 +609,4 @@ def main(arguments=None) -> None:
         print(e)
 
     _config.set_http_lib_agents(prior_user_agents)
+    print("Garak scan finished completely...............")
