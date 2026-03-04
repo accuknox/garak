@@ -158,6 +158,7 @@ def end_run():
     msg = f"run complete in {timetaken:.2f}s"
     print(f"✔️  {msg}")
     logging.info(msg)
+    print("msg logged")
 
 
 def print_plugins(prefix: str, color):
